@@ -1,0 +1,27 @@
+  .content-section {
+    background: #ffffff;
+    padding: 10px 20px;
+    border: 1px solid #dddddd;
+    border-radius: 3px;
+    margin-bottom: 20px;
+  }
+  
+  
+  .invalid-feedback{
+  display:block;
+  }
+ 
+.container{
+    margin-left:10%;
+    margin-right: 10%;
+    width:80%;
+    margin-top:10%;
+  }
+  
+  .card-class{
+    transition: all .2s ease-in-out;
+  }
+  
+   .card-class:hover{
+    transform: scale(1.1);
+  }
