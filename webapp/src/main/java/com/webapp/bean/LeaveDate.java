@@ -1,19 +1,20 @@
 package com.webapp.bean;
-
-import java.util.Date;
-
 import org.hibernate.validator.constraints.NotEmpty;
 
-
-
-
+import com.webapp.CustomValidation.DateValidate;
 public class LeaveDate {
+	
+@NotEmpty
+@DateValidate
+private String date;
 
-
-private Date date;
-
-
+@NotEmpty
 private String customerUsername;
+
+@NotEmpty
+private String hawkerUsername;
+
+
 public String getCustomerUsername() {
 	return customerUsername;
 }
@@ -30,14 +31,10 @@ public void setHawkerUsername(String hawkerUsername) {
 	this.hawkerUsername = hawkerUsername;
 }
 
-private String hawkerUsername;
-
-
-public Date getDate() {
+public String getDate() {
 	return date;
 }
-
-public void setDate(Date date) {
+public void setDate(String date) {
 	this.date = date;
 }
 

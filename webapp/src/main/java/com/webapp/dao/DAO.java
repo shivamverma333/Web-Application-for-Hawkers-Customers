@@ -7,12 +7,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.webapp.bean.CurrentCustomerDetails;
 import com.webapp.bean.CurrentHawkerDetails;
 import com.webapp.bean.CustomerDetails;
 import com.webapp.bean.HawkerDetails;
 import com.webapp.bean.HawkerRegister;
 import com.webapp.bean.LeaveDate;
 import com.webapp.bean.Login;
+import com.webapp.bean.PaymentDetails;
 import com.webapp.bean.Register;
 import com.webapp.bean.Request;
 import com.webapp.util.DBConnection;
@@ -88,6 +90,24 @@ public class DAO {
 		return false;
 
 	}
+	
+	public boolean checkHawkerUsername(String username) {
+		try {
+			statement=connection.prepareStatement("select username from hawker where username=?");
+			statement.setString(1,username);
+			resultSet=statement.executeQuery();
+			if(!resultSet.next()) {
+				return true;
+			}
+			return false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+
+	}
+	
+	
 	
 	public ArrayList<HawkerDetails> findHawkers(String search) {
 		ArrayList<HawkerDetails> list=new ArrayList<>();
@@ -425,7 +445,7 @@ public class DAO {
 			statement=connection.prepareStatement("insert into leaveDates values(?,?,?);");
 			statement.setString(1,leaveDate.getCustomerUsername());
 			statement.setString(2, leaveDate.getHawkerUsername());
-			statement.setDate(3,new Date(leaveDate.getDate().getTime()));
+			statement.setDate(3, Date.valueOf(leaveDate.getDate()));
 			int i=statement.executeUpdate();
 			if(i>0) {
 				status.add("Success");
@@ -472,6 +492,88 @@ public class DAO {
 			e.printStackTrace();
 		}
 		return request;
+	}
+	
+	public CurrentCustomerDetails getCurrentCustomerDetails(Request request) {
+		CurrentCustomerDetails ccd=new CurrentCustomerDetails();
+		try {
+			statement=connection.prepareStatement("select * from customerdetails where username=?");
+			statement.setString(1,request.getCustomerUsername());
+			resultSet=statement.executeQuery();
+			while(resultSet.next()) {
+				ccd.setUsername(resultSet.getString(1));
+				ccd.setName(resultSet.getString(2));
+				ccd.setEmail(resultSet.getString(3));
+				ccd.setContact(resultSet.getString(4));
+				ccd.setAddress(resultSet.getString(5));
+				ccd.setState(resultSet.getString(6));
+				ccd.setCity(resultSet.getString(7));
+				ccd.setLeaveDates(getLeaveDates(request));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return ccd;
+	}
+
+	public int savePayment(Request request,double paymentAmount) {
+		try {
+			statement=connection.prepareStatement("insert into paymentdetails values( ? , ? , ?, ?)");
+			statement.setString(1, request.getCustomerUsername());
+			statement.setString(2, request.getHawkerUsername());
+			statement.setDate(3, new Date(System.currentTimeMillis()));
+			statement.setDouble(4, paymentAmount);
+			int i=statement.executeUpdate();
+			if(i>0) {
+				deleteLeaveDates(request);
+				return 1;
+			}
+		}catch(SQLException e) {
+			return 2;
+		}
+		return 0;
+	}
+	
+	public void deleteLeaveDates(Request request) {
+		try {
+			statement=connection.prepareStatement("delete from leavedates where customerUsername=? and hawkerUsername=?");
+			statement.setString(1, request.getCustomerUsername());
+			statement.setString(2, request.getHawkerUsername());
+			statement.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public ArrayList<PaymentDetails> getPaymentHistory(Request request) {
+		ArrayList<PaymentDetails> list=new ArrayList<>();
+		try {
+			statement=connection.prepareStatement("select * from paymentdetails where customerUsername=? and hawkerUsername=? ");
+			statement.setString(1,request.getCustomerUsername());
+			statement.setString(2, request.getHawkerUsername());
+			resultSet=statement.executeQuery();
+			while(resultSet.next()) {
+				list.add(new PaymentDetails(resultSet.getString(1),resultSet.getString(2),resultSet.getDate(3),resultSet.getDouble(4)));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	
+	public Date getLastPaymentDate() {
+		try {
+			statement=connection.prepareStatement("select dateOfPayment from paymentdetails order by dateOfPayment desc limit 1");
+			resultSet=statement.executeQuery();
+			if(resultSet.next()){
+				return resultSet.getDate(1);
+			}
+			return null;
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.webapp.service;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -7,6 +8,7 @@ import com.webapp.bean.CustomerDetails;
 import com.webapp.bean.HawkerDetails;
 import com.webapp.bean.LeaveDate;
 import com.webapp.bean.Login;
+import com.webapp.bean.PaymentDetails;
 import com.webapp.bean.Register;
 import com.webapp.bean.Request;
 import com.webapp.dao.DAO;
@@ -73,6 +75,11 @@ public class CustomerServiceImpl implements CustomerService{
 	
 	public ArrayList<String> saveLeaveDate(LeaveDate leaveDate){
 		return dao.saveLeaveDate(leaveDate);
+	}
+
+	@Override
+	public Date getLastPaymentDate() {
+		return dao.getLastPaymentDate();
 	}
 
 

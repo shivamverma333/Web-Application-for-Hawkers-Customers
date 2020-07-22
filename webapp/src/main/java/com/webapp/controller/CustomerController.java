@@ -4,8 +4,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +18,7 @@ import com.webapp.bean.CustomerDetails;
 import com.webapp.bean.HawkerDetails;
 import com.webapp.bean.LeaveDate;
 import com.webapp.bean.Login;
+import com.webapp.bean.PaymentDetails;
 import com.webapp.bean.Register;
 import com.webapp.bean.Request;
 import com.webapp.bean.Search;
@@ -196,19 +195,30 @@ public class CustomerController {
 		Request request=new Request();
 		request.setHawkerUsername(hawkerUsername);
 		request.setCustomerUsername((String) session.getAttribute("username"));
+		ArrayList<PaymentDetails> paymentHistory=new ArrayList<>();
+		paymentHistory=hs.getPaymentHistory(request);
 		CurrentHawkerDetails hawker=hs.getCurrentHawkerDetails(request);
 		request=hs.getRequestAcceptDate(request);
 		Payment payment=new Payment();
 		boolean checkPayment=payment.todayDateCheck(request.getRequestAcceptDate());
+		model.addAttribute("paymentHistory",paymentHistory);
 		model.addAttribute("checkPayment",checkPayment);
-		model.addAttribute("dateForm", new LeaveDate());
+		if(!model.containsAttribute("dateForm")) {
+			model.addAttribute("dateForm", new LeaveDate());
+		}
 		model.addAttribute("hawker",hawker);
 		return "viewCurrentHawkerDetails";
 	}
 	
 	
 	@RequestMapping(value="/currentHawkers/{hawkerUsername}",method=RequestMethod.POST)
-	public String saveLeaveDate(@ModelAttribute("dateForm")LeaveDate dateForm, @PathVariable("hawkerUsername")String hawkerUsername,RedirectAttributes ra,Model model) {
+	public String saveLeaveDate(@Valid @ModelAttribute("dateForm")LeaveDate dateForm,BindingResult result, @PathVariable("hawkerUsername")String hawkerUsername,RedirectAttributes ra,Model model) {
+		if(result.hasErrors()) {
+			ra.addFlashAttribute("org.springframework.validation.BindingResult.dateForm", result);
+			ra.addFlashAttribute("result",result);
+			ra.addFlashAttribute("dateForm", dateForm);
+			return "redirect:/customer/currentHawkers/"+hawkerUsername;
+		}
 		CustomerService cs=new CustomerServiceImpl();
 		ArrayList<String> status=cs.saveLeaveDate(dateForm);
 		if(status.get(0).equals("Success")) {

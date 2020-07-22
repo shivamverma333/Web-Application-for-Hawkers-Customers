@@ -7,13 +7,17 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.webapp.CustomValidation.IsHawkerRegisterPasswordMatches;
+import com.webapp.CustomValidation.UniqueHawker;
 
+@IsHawkerRegisterPasswordMatches
 public class HawkerRegister {
 
 	@NotEmpty(message="This is a required field.")
 	private String name;
 	
 	@NotEmpty(message="This is a required field.")
+	@UniqueHawker
 	private String username;
 	
 	@NotEmpty(message="This is a required field.")

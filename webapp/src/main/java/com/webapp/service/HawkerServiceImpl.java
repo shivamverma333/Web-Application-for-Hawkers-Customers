@@ -3,13 +3,16 @@ package com.webapp.service;
 
 import java.util.ArrayList;
 
+import com.webapp.bean.CurrentCustomerDetails;
 import com.webapp.bean.CurrentHawkerDetails;
 import com.webapp.bean.CustomerDetails;
 import com.webapp.bean.HawkerDetails;
 import com.webapp.bean.HawkerRegister;
 import com.webapp.bean.Login;
+import com.webapp.bean.PaymentDetails;
 import com.webapp.bean.Request;
 import com.webapp.dao.DAO;
+import com.webapp.util.Payment;
 
 public class HawkerServiceImpl implements HawkerService {
 	
@@ -64,6 +67,28 @@ public class HawkerServiceImpl implements HawkerService {
 	@Override
 	public Request getRequestAcceptDate(Request request) {
 		return dao.getRequestAcceptDate(request);
+	}
+
+	@Override
+	public CurrentCustomerDetails getCurrentCustomerDetails(Request request) {
+		return dao.getCurrentCustomerDetails(request);
+	}
+
+	@Override
+	public int savePayment(Request request) {
+		Payment payment=new Payment();
+		double paymentAmount=payment.calculatePayment(request);
+		return dao.savePayment(request,paymentAmount);
+	}
+
+	@Override
+	public ArrayList<PaymentDetails> getPaymentHistory(Request request) {
+		return dao.getPaymentHistory(request);
+	}
+
+	@Override
+	public boolean checkHawkerUsername(String username) {
+		return dao.checkHawkerUsername(username);
 	}
 	
 	

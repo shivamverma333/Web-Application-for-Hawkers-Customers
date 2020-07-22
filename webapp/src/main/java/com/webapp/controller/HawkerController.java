@@ -17,13 +17,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.webapp.bean.CustomerDetails;
 import com.webapp.bean.HawkerDetails;
 import com.webapp.bean.HawkerRegister;
-import com.webapp.bean.LeaveDate;
 import com.webapp.bean.Login;
+import com.webapp.bean.PaymentDetails;
 import com.webapp.bean.Request;
 import com.webapp.service.CustomerService;
 import com.webapp.service.CustomerServiceImpl;
 import com.webapp.service.HawkerService;
 import com.webapp.service.HawkerServiceImpl;
+import com.webapp.util.Payment;
 
 @Controller
 @RequestMapping("/hawker")
@@ -156,9 +157,41 @@ public class HawkerController {
 	
 	@RequestMapping(value="/viewCurrentCustomers/{customerUsername}",method=RequestMethod.GET)
 	public String viewCurrentCustomerDetails(@PathVariable("customerUsername")String customerUsername, HttpSession session, Model model) {
-		CustomerService cs=new CustomerServiceImpl();
-		model.addAttribute("customer", cs.getCustomerDetails(customerUsername));
+		String hawkerUsername=(String)session.getAttribute("username");
+		HawkerService hawkerService=new HawkerServiceImpl();
+		HawkerDetails hd=hawkerService.getHawkerDetails(hawkerUsername);
+		Request request=new Request();
+		request.setHawkerUsername(hawkerUsername);
+		request.setCustomerUsername(customerUsername);
+		ArrayList<PaymentDetails> paymentHistory=new ArrayList<>();
+		paymentHistory=hawkerService.getPaymentHistory(request);
+		model.addAttribute("paymentHistory", paymentHistory);
+		model.addAttribute("customer", hawkerService.getCurrentCustomerDetails(request));
+		request=hawkerService.getRequestAcceptDate(request);
+		Payment payment=new Payment();
+		boolean checkPayment=payment.todayDateCheck(request.getRequestAcceptDate());
+		model.addAttribute("checkPayment",checkPayment);
+		model.addAttribute("hawker", hd);
 		return "viewCurrentCustomerDetails";
+	}
+	
+	
+	@RequestMapping(value="/viewCurrentCustomers/{customerUsername}/payment",method=RequestMethod.POST)
+	public String paymentApproved(@PathVariable("customerUsername")String customerUsername,HttpSession session,Model model,RedirectAttributes ra) {
+		String hawkerUsername=(String)session.getAttribute("username");
+		Request request=new Request();
+		request.setCustomerUsername(customerUsername);
+		request.setHawkerUsername(hawkerUsername);
+		HawkerService hawkerService =new HawkerServiceImpl();
+		int status=hawkerService.savePayment(request);
+		if(status==1) {
+			model.addAttribute("checkPayment", false);
+		}else if(status==2){
+			ra.addFlashAttribute("error", "Payment already received.");
+		}else {
+			ra.addFlashAttribute("error", "Payment saved failed.");
+		}
+		return "redirect:/hawker/viewCurrentCustomers/"+customerUsername;
 	}
 	
 	

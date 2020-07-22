@@ -1,5 +1,6 @@
 package com.webapp.service;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -7,6 +8,7 @@ import com.webapp.bean.CustomerDetails;
 import com.webapp.bean.HawkerDetails;
 import com.webapp.bean.LeaveDate;
 import com.webapp.bean.Login;
+import com.webapp.bean.PaymentDetails;
 import com.webapp.bean.Register;
 import com.webapp.bean.Request;
 
@@ -22,5 +24,6 @@ public interface CustomerService {
 	public ArrayList<HawkerDetails> getRequestedHawkers(String customerUsername);
 	public ArrayList<HawkerDetails> getCurrentHawkers(String customerUsername);
 	public ArrayList<String> saveLeaveDate(LeaveDate leaveDate);
+	public Date getLastPaymentDate();
 
 }

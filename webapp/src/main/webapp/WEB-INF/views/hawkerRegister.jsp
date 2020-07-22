@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>"/>
 </head>
 <body class="bg-info">
+<%@include file="header.jsp"%>
 	<div  class="container">
       <div class="row">
         <div class="col-md-12">
@@ -146,10 +147,10 @@
                     		<label class="form-control-label">Plan Quantity</label>
                     		<c:choose>
         					<c:when test="${result.getFieldError('planQuantity')!=null}">
-        						<form:input path="planQuantity" type="text" class="form-control form-control is-invalid"/>
+        						<form:input path="planQuantity" type="number" step="0.1" class="form-control form-control is-invalid"/>
         					</c:when>
         					<c:otherwise>
-        					 	<form:input path="planQuantity" type="text" class="form-control form-control"/>
+        					 	<form:input path="planQuantity" type="number" step="0.1" class="form-control form-control"/>
         					</c:otherwise>
         				</c:choose>
                         	
@@ -161,10 +162,10 @@
                     		<label class="form-control-label">Plan Monthly Price</label>
                     		<c:choose>
         					<c:when test="${result.getFieldError('planPrice')!=null}">
-        						<form:input path="planPrice" type="text" class="form-control form-control is-invalid"/>
+        						<form:input path="planPrice" type="number" step="0.01" class="form-control form-control is-invalid"/>
         					</c:when>
         					<c:otherwise>
-        					 	<form:input path="planPrice" type="text" class="form-control form-control"/>
+        					 	<form:input path="planPrice" type="number" step="0.01" class="form-control form-control"/>
         					</c:otherwise>
         				</c:choose>
                         	
