@@ -3,10 +3,10 @@
   <div>
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="/customer/dashboard">Dashboard</a>
+        <a class="nav-link" href="/hawker/dashboard">Dashboard</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/customer/update">Update Profile</a>
+        <a class="nav-link" href="/hawker/update">Update Profile</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/logout">Logout</a>
@@ -16,5 +16,5 @@
 </nav>
 
 <div class="jumbotron jumbotron-fluid bg-dark pt-0 text-left pb-0">
-    <h2 class="display-5 text-white pt-0">Welcome ${customer.name}</h2>
+    <h2 class="display-5 text-white pt-0">Welcome ${hawker.name}</h2>
 </div>

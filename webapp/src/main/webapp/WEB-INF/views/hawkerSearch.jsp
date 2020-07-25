@@ -24,11 +24,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>"/>
 </head>
-<body class="bg-info">
+<body class="hawkerSearch">
+<%@include file="customerLoginHeader.jsp" %>
 	<div  class="container">
-      <div class="row">
-        <div class="col-md-12">
-        	<div class="content-section">
+      <div class="content-section">
         	<% if(request.getAttribute("error")!=null){ %>
         		<div class="alert alert-danger alert-dismissible" role="alert">
                   <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -36,24 +35,19 @@
                 </div>
             <%} %>
             <form:form method="POST" action="/customer/search" modelAttribute="search">
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Search Services</legend>
+                <div class="search"><h2 class="mb-3 pt-3 pb-3 text-white">Search Services</h2></div>
                 <div class="form-group">
-                	<label class="form-control-label">Search</label>
-                	<form:input path="search" type="text" class="form-control form-control"/>
+                	<form:input path="search" type="text" placeholder="Search keywords ex. milk, newspaper, water etc.." class="form-control form-control"/>
                 	<div class="invalid-feedback">
                 		<span><form:errors path="search"/></span>
                 	</div>
                 </div>
-            </fieldset>
             <div class="form-group">
-                <input type="submit" class="btn btn-outline-info" value="submit" formnovalidate>
+                <input type="submit" class="btn btn-dark" value="submit" formnovalidate>
             </div>
         </form:form>
-            </div>
-        </div>
-      </div>
-    </div>
+       </div>
+     </div>
     
     <script>
     var search=document.getElementById("search");

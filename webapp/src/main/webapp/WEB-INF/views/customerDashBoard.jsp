@@ -26,12 +26,12 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>"/>
 </head>
 
-<body class="bg-info">
+<body class="customerDashboard">
 <%@include file="customerLoginHeader.jsp" %>
 	<section id="section"> 
       <div class="row">
         <div class="col-lg-4 d-flex">
-        	<div class="card card-class text-center">
+        	<div class="card card-class text-center pb-3">
         <a class="text-dark" href="/customer/currentHawkers">
         	   <img src="<c:url value="/resources/images/hawker.jpg"/>" class="card-img-top">
   				<div class="card-body">
@@ -44,7 +44,7 @@
 			</div>
         </div>
         <div class=" col-lg-4 d-flex">
-        	<div class="card card-class text-center">
+        	<div class="card card-class text-center pb-3">
         	 <a class="text-dark" href="/customer/search">
         	<img src="<c:url value="/resources/images/search.png"/>" class="card-img-top">
   				<div class="card-body">
@@ -57,7 +57,7 @@
 			</div>
         </div>
         <div class="col-lg-4  d-flex">
-        	<div class="card card-class text-center">
+        	<div class="card card-class text-center pb-3">
         	<a class="text-dark" href="/customer/requested">
         	<img src="<c:url value="/resources/images/request.png"/>" class="card-img-top">
   				<div class="card-body">

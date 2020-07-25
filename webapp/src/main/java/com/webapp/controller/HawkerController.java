@@ -30,8 +30,18 @@ import com.webapp.util.Payment;
 @RequestMapping("/hawker")
 public class HawkerController {
 	
+	
+	private boolean isLoggedIn(HttpSession session){
+		if(session.getAttribute("loggedin")==null||!(boolean)session.getAttribute("loggedin")||session.getAttribute("username")==null) {
+			return false;
+		}
+		return true;
+	}
+	
 	@RequestMapping(value="/login",method=RequestMethod.GET)
-	public String loginGet(Model model) {
+	public String loginGet(Model model,HttpSession session) {
+		if(isLoggedIn(session))
+			return "redirect:/hawker/dashboard";
 		model.addAttribute("loginForm", new Login());
 		return "hawkerLogin";
 	}
@@ -47,6 +57,7 @@ public class HawkerController {
 		if(verify) {
 			session.setAttribute("username", user.getUsername());
 			session.setAttribute("loggedin", true);
+			session.setAttribute("hawker", hs.getHawkerDetails(user.getUsername()));
 			return "redirect:/hawker/dashboard";
 		}
 		ra.addFlashAttribute("error","Invalid credentials. Please try again");
@@ -55,7 +66,9 @@ public class HawkerController {
 	
 	
 	@RequestMapping(value="/register",method=RequestMethod.GET)
-	public String registerGet(Model model) {
+	public String registerGet(Model model,HttpSession session) {
+		if(isLoggedIn(session))
+			return "redirect:/hawker/dashboard";
 		model.addAttribute("registerForm",new HawkerRegister());
 		return "hawkerRegister";
 	}
@@ -72,6 +85,7 @@ public class HawkerController {
 		if(save) {
 			session.setAttribute("loggedin", true);
 			session.setAttribute("username",register.getUsername());
+			session.setAttribute("hawker", register);
 			return "redirect:/hawker/dashboard";
 		}
 		ra.addFlashAttribute("error", "Registration failed. Please try again.");
@@ -80,28 +94,31 @@ public class HawkerController {
 	}
 	
 	@RequestMapping(value="/dashboard",method=RequestMethod.GET)
-	public String dashboard() {
+	public String dashboard(HttpSession session) {
+		if(!isLoggedIn(session))
+			return "redirect:/hawker/login";
 		return "hawkerDashboard";
 	}
 	
 	
 	@RequestMapping(value="/update",method=RequestMethod.GET)
 	public String getUpdatePage(Model model,HttpSession session) {
+		if(!isLoggedIn(session))
+			return "redirect:/hawker/login";
 		String username=(String)session.getAttribute("username");
-		HawkerService hs=new HawkerServiceImpl();
-		HawkerDetails hd=hs.getHawkerDetails(username);
-		model.addAttribute("updateForm",hd);
+		model.addAttribute("updateForm",session.getAttribute("hawker"));
 		return "updateHawker";
 	}
 	
 	@RequestMapping(value="/update",method=RequestMethod.POST)
-	public String update(@Valid @ModelAttribute("updateForm") HawkerDetails hd,BindingResult result,RedirectAttributes ra) {
+	public String update(@Valid @ModelAttribute("updateForm") HawkerDetails hd,BindingResult result,RedirectAttributes ra,HttpSession session) {
 		if(result.hasErrors()) {
 			return "updateHawker";
 		}
 		HawkerService hs=new HawkerServiceImpl();
 		boolean success=hs.updateHawker(hd);
 		if(success) {
+			session.setAttribute("hawker",hs.getHawkerDetails(hd.getUsername()));
 			return "redirect:/hawker/dashboard";
 		}
 		ra.addFlashAttribute("error","Update Failed.Please try again");
@@ -111,6 +128,8 @@ public class HawkerController {
 	
 	@RequestMapping(value="/customerRequests",method=RequestMethod.GET)
 	public String getcustomerRequests(HttpSession session,Model model) {
+		if(!isLoggedIn(session))
+			return "redirect:/hawker/login";
 		String hawkerUsername=(String)session.getAttribute("username");
 		HawkerService hs=new HawkerServiceImpl();
 		ArrayList<CustomerDetails> list=hs.getCustomerRequests(hawkerUsername);
@@ -120,6 +139,8 @@ public class HawkerController {
 	
 	@RequestMapping(value="/customerRequests/{customerUsername}",method=RequestMethod.GET)
 	public String viewCustomerRequestDetails(@PathVariable("customerUsername")String customerUsername, HttpSession session, Model model) {
+		if(!isLoggedIn(session))
+			return "redirect:/hawker/login";
 		CustomerService cs=new CustomerServiceImpl();
 		model.addAttribute("customer", cs.getCustomerDetails(customerUsername));
 		return "viewCustomerRequestDetails";
@@ -128,6 +149,8 @@ public class HawkerController {
 	
 	@RequestMapping(value="/customerRequests/{customerUsername}/{requestResponse}",method=RequestMethod.GET)
 	public String viewCustomerRequestDetails(@PathVariable("customerUsername")String customerUsername,@PathVariable("requestResponse")String requestResponse,HttpSession session,RedirectAttributes ra) {
+		if(!isLoggedIn(session))
+			return "redirect:/hawker/login";
 		if(requestResponse.equals("accept")) {
 			String hawkerUsername=(String)session.getAttribute("username");
 			HawkerService hs=new HawkerServiceImpl();
@@ -148,6 +171,8 @@ public class HawkerController {
 	
 	@RequestMapping(value="/viewCurrentCustomers",method=RequestMethod.GET)
 	public String getCurrentCustomers(HttpSession session,Model model) {
+		if(!isLoggedIn(session))
+			return "redirect:/hawker/login";
 		String hawkerUsername=(String)session.getAttribute("username");
 		HawkerService hs=new HawkerServiceImpl();
 		ArrayList<CustomerDetails>list=hs.getCurrentCustomers(hawkerUsername);
@@ -157,6 +182,8 @@ public class HawkerController {
 	
 	@RequestMapping(value="/viewCurrentCustomers/{customerUsername}",method=RequestMethod.GET)
 	public String viewCurrentCustomerDetails(@PathVariable("customerUsername")String customerUsername, HttpSession session, Model model) {
+		if(!isLoggedIn(session))
+			return "redirect:/hawker/login";
 		String hawkerUsername=(String)session.getAttribute("username");
 		HawkerService hawkerService=new HawkerServiceImpl();
 		HawkerDetails hd=hawkerService.getHawkerDetails(hawkerUsername);
@@ -178,6 +205,8 @@ public class HawkerController {
 	
 	@RequestMapping(value="/viewCurrentCustomers/{customerUsername}/payment",method=RequestMethod.POST)
 	public String paymentApproved(@PathVariable("customerUsername")String customerUsername,HttpSession session,Model model,RedirectAttributes ra) {
+		if(!isLoggedIn(session))
+			return "redirect:/hawker/login";
 		String hawkerUsername=(String)session.getAttribute("username");
 		Request request=new Request();
 		request.setCustomerUsername(customerUsername);

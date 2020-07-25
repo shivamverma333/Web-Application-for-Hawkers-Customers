@@ -15,79 +15,77 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>"/>
 </head>
-<body class="bg-info">
-<%@include file="header.jsp"%>
+<body class="register">
 	<div  class="container">
-      <div class="row">
-        <div class="col-md-12">
         	<div class="content-section">
+        		<form:form action="/customer/register" method="post" class="form-container" name="regForm" modelAttribute="registerForm">
+        		
         	<% if(request.getAttribute("error")!=null){ %>
         		<div class="alert alert-danger alert-dismissible" role="alert">
                   <button type="button" class="close" data-dismiss="alert">&times;</button>
                   ${error}
                 </div>
             <%} %>
-        		<form:form action="/customer/register" method="post" name="regForm" modelAttribute="registerForm">
-        		<legend class="border-bottom mb-4">Register</legend>
+        		<legend class="border-bottom mb-4">Customer Registration Form</legend>
         			<div class="form-group">
                     	<label class="form-control-label">Name</label>
-                        <form:input path="name" type="text" class="form-control form-control"/>
+                        <form:input path="name" type="text" class="form-control"/>
                         <div class="invalid-feedback">
                         	<span><form:errors path="name"/></span>
                         </div>
                 	</div>
                 	<div class="form-group">
                     	<label class="form-control-label">Username</label>
-                        <form:input path="username" type="text" class="form-control form-control"/>
+                        <form:input path="username" type="text" class="form-control"/>
                         <div class="invalid-feedback">
                         	<span><form:errors path="username"/></span>
                         </div>
                 	</div>
                 	<div class="form-group">
                     	<label class="form-control-label">Email</label>
-                        <form:input path="email" type="text" class="form-control form-control"/>
+                        <form:input path="email" type="text" class="form-control"/>
                         <div class="invalid-feedback">
                         	<span><form:errors path="email"/></span>
                         </div>
                 	</div>
                 	<div class="form-group">
                     	<label class="form-control-label">Contact Number</label>
-                        <form:input path="contact" type="number" class="form-control form-control"/>
+                        <form:input path="contact" type="number" class="form-control"/>
                         <div class="invalid-feedback">
                         	<span><form:errors path="contact"/></span>
                         </div>
                 	</div>
                 	<div class="form-group">
                     	<label class="form-control-label">Address</label>
-                        <form:input path="address" type="textarea" class="form-control form-control"/>
+                        <form:input path="address" type="textarea" class="form-control"/>
                         <div class="invalid-feedback">
                         	<span><form:errors path="address"/></span>
                         </div>
                 	</div>
                 	<div class="form-group">
                     	<label class="form-control-label">State</label>
-                        <form:input path="state" type="text" class="form-control form-control"/>
+                        <form:input path="state" type="text" class="form-control"/>
                         <div class="invalid-feedback">
                         	<span><form:errors path="state"/></span>
                         </div>
                 	</div>
                 	<div class="form-group">
                     	<label class="form-control-label">City</label>
-                        <form:input path="city" type="text" class="form-control form-control"/>
+                        <form:input path="city" type="text" class="form-control"/>
                         <div class="invalid-feedback">
                         	<span><form:errors path="city"/></span>
                         </div>
                 	</div>
                 	<div class="form-group">
                     	<label class="form-control-label">Password</label>
-                        <form:input path="password" type="password" class="form-control form-control"/>
+                        <form:input path="password" type="password" class="form-control"/>
                         <div class="invalid-feedback">
                         	<span><form:errors path="password"/></span>
                         </div>
                 	</div>
                 	<div class="form-group">
                     	<label class="form-control-label">Confirm Password</label>
-                        <form:input path="confirmPassword" type="password" class="form-control form-control"/>
+                        <form:input path="confirmPassword" type="password" class="form-control"/>
                         <div class="invalid-feedback">
                         	<span><form:errors path="confirmPassword"/></span>
                         	<span><form:errors path=""/></span>
@@ -96,13 +94,12 @@
                 	
                 	
                 	<div class="form-group">
-        				<input type="submit" class="btn btn-outline-info" value="submit" formnovalidate>
+        				<input style="width:10rem;" type="submit" class="btn btn-success" value="submit" formnovalidate>
+            			<input style="width:10rem;" type="reset" class="btn btn-danger" value="reset">
             		</div>
         		</form:form>
     		</div>
         </div>
-      </div>
-    </div>
 </body>
 
 <script>

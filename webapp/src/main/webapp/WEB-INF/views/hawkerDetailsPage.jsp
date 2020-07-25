@@ -26,64 +26,62 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>"/>
 </head>
 
-<body class="bg-info">
+<body class="hawkerDetailsPage">
+<%@include file="customerLoginHeader.jsp" %>
 	<div  class="container">
-      <div class="flex-d row justify-content-center">
-        <div class="col-md-12">
-        <% if(request.getAttribute("error")!=null){ %>
+        <div class="content-section">
+                <% if(request.getAttribute("error")!=null){ %>
         		<div class="alert alert-danger alert-dismissible" role="alert">
                   <button type="button" class="close" data-dismiss="alert">&times;</button>
                   ${error}
                 </div>
         <%} %>
-        <div class="content-section">
-        	<legend class="border-bottom mb-4">Hawker Details</legend>
-        	<div class="form-group">
-        		<label class="form-control-label">Username:</label>
-        		<label class="form-control-label">${hawker.username}</label>
-        	</div>
-        	        	<div class="form-group">
-        		<label class="form-control-label">Name:</label>
-        		<label class="form-control-label">${hawker.name}</label>
-        	</div>
-        	        	<div class="form-group">
-        		<label class="form-control-label">E-Mail:</label>
-        		<label class="form-control-label">${hawker.email}</label>
-        	</div>
-        	        	<div class="form-group">
-        		<label class="form-control-label">Contact:</label>
-        		<label class="form-control-label">${hawker.contact}</label>
-        	</div>
-        	        	<div class="form-group">
-        		<label class="form-control-label">Address:</label>
-        		<label class="form-control-label">${hawker.address}</label>
-        	</div>
-        	        	<div class="form-group">
-        		<label class="form-control-label">State:</label>
-        		<label class="form-control-label">${hawker.state}</label>
-        	</div>
-        	        	<div class="form-group">
-        		<label class="form-control-label">City:</label>
-        		<label class="form-control-label">${hawker.city}</label>
-        	</div>
-        	        	<div class="form-group">
-        		<label class="form-control-label">Plan Name:</label>
-        		<label class="form-control-label">${hawker.planName}</label>
-        	</div>
-        	        	<div class="form-group">
-        		<label class="form-control-label">Plan Quantity:</label>
-        		<label class="form-control-label">${hawker.planQuantity}</label>
-        	</div>
-        	        	<div class="form-group">
-        		<label class="form-control-label">Plan Price:</label>
-        		<label class="form-control-label">${hawker.planPrice}</label>
-        	</div>
-        	<a class="btn btn-outline-info bt-md" href="/customer/search/${service}/${hawker.username}/request">Request</a>
+        	<h2 class="border-bottom mb-4">Hawker Details</h2>
+        	<table>
+        		<tr>
+        			<td><label class="form-control-label">Username:</label></td>
+        			<td><label class="form-control-label">${hawker.username}</label></td>
+        		</tr>
+        		<tr>
+        			<td><label class="form-control-label">Name:</label></td>
+        			<td><label class="form-control-label">${hawker.name}</label></td>
+        		</tr>
+        		 <tr>
+        			<td><label class="form-control-label">Email:</label></td>
+        			<td><label class="form-control-label">${hawker.email}</label></td>
+        		</tr>
+        		 <tr>
+        			<td><label class="form-control-label">Contact:</label></td>
+        			<td><label class="form-control-label">${hawker.contact}</label></td>
+        		</tr>
+        		<tr>
+        			<td><label class="form-control-label">Address:</label></td>
+        			<td><label class="form-control-label">${hawker.address}</label></td>
+        		</tr>
+        		<tr>
+        			<td><label class="form-control-label">State:</label></td>
+        			<td><label class="form-control-label">${hawker.state}</label></td>
+        		</tr>
+        		 <tr>
+        			<td><label class="form-control-label">City:</label></td>
+        			<td><label class="form-control-label">${hawker.city}</label></td>
+        		</tr>
+        		 <tr>
+        			<td><label class="form-control-label">Plan Name:</label></td>
+        			<td><label class="form-control-label">${hawker.planName}</label></td>
+        		</tr>
+        		 <tr>
+        			<td><label class="form-control-label">Plan Quantity:</label></td>
+        			<td><label class="form-control-label">${hawker.planQuantity}</label></td>
+        		</tr>
+        		<tr>
+        			<td><label class="form-control-label">Plan Price:</label></td>
+        			<td><label class="form-control-label">${hawker.planPrice}</label></td>
+        		</tr>
+        	</table>
+        	<a class="btn btn-success bt-md" href="/customer/search/${service}/${hawker.username}/request">Request</a>
        	</div>
        	</div>
-       </div>
-     </div>
-
 </body>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

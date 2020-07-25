@@ -14,23 +14,22 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>"/>
 </head>
-<body class="bg-info">
-<%@include file="header.jsp"%>
+<body class="login">
 	<div  class="container">
-      <div class="row">
-        <div class="col-md-12">
-        	<div class="content-section">
+        <div class="content-section">
+        		<form:form action="/customer/login" method="post" class="form-container" modelAttribute="loginForm">
+        		<div class="d-flex justify-content-center"><img class="user-img" src="<c:url value="/resources/images/user.png"/>"></div>
+        		
         	<% if(request.getAttribute("error")!=null){ %>
         		<div class="alert alert-danger alert-dismissible" role="alert">
                   <button type="button" class="close" data-dismiss="alert">&times;</button>
                   ${error}
                 </div>
             <%} %>
-        		<form:form action="/customer/login" method="post" modelAttribute="loginForm">
-        		<legend class="border-bottom mb-4">Log In</legend>
+        		<legend class="border-bottom mb-4">Customer Log In</legend>
         			<div class="form-group">
                     	<label class="form-control-label">Username</label>
-                        <form:input path="username" type="text" class="form-control form-control"/>
+                        <form:input path="username" type="text" class="form-control"/>
                         <div class="invalid-feedback">
                         	<span><form:errors path="username"/></span>
                         </div>
@@ -38,20 +37,18 @@
                 	
                 	<div class="form-group">
                     	<label class="form-control-label">Password</label>
-                        <form:input path="password" type="password" class="form-control form-control"/>
+                        <form:input path="password" type="password" class="form-control"/>
                         <div class="invalid-feedback">
                         	<span><form:errors path="password"/></span>
                         </div>
                 	</div>
                 	<div class="form-group">
-        				<input type="submit" class="btn btn-outline-info" value="submit" formnovalidate>
+        				<input type="submit" class="form-control btn-primary" value="submit" formnovalidate>
             		</div>
         		</form:form>
-        		<span><a class="text-info" href="/customer/register">New user? Click here to Register</a></span>
+        		<div class="text-center"><span class="text-center"><a class="text-danger text-center register-link" href="/customer/register">New user? Click here to Register</a></span></div>
     		</div>
         </div>
-      </div>
-    </div>
 </body>
 
 <script>

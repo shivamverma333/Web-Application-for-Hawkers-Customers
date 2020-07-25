@@ -15,20 +15,19 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>"/>
 </head>
-<body class="bg-info">
-<%@include file="header.jsp"%>
+<body class="register">
 	<div  class="container">
-      <div class="row">
-        <div class="col-md-12">
         	<div class="content-section">
+        		<form:form action="/hawker/register" method="post" class="form-container" name="regForm" modelAttribute="registerForm">
+        		
         	<% if(request.getAttribute("error")!=null){ %>
         		<div class="alert alert-danger alert-dismissible" role="alert">
                   <button type="button" class="close" data-dismiss="alert">&times;</button>
                   ${error}
                 </div>
             <%} %>
-        		<form:form action="/hawker/register" method="post" name="regForm" modelAttribute="registerForm">
-        		<legend class="border-bottom mb-4">Register</legend>
+        		
+        		<legend class="border-bottom mb-4">Hawker Registration Form</legend>
         			<div class="form-group">
                     	<label class="form-control-label">Name</label>
                     	<c:choose>
@@ -206,13 +205,12 @@
                         </div>
                 	</div>
                 	<div class="form-group">
-        				<input type="submit" class="btn btn-outline-info" value="submit" formnovalidate>
+        				<input style="width:10rem;" type="submit" class="btn btn-success" value="submit" formnovalidate>
+        				<input style="width:10rem;" type="reset" class="btn btn-danger" value="reset">
             		</div>
         		</form:form>
     		</div>
         </div>
-      </div>
-    </div>
 </body>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

@@ -26,70 +26,41 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>"/>
 </head>
 
-<body class="bg-info">
-	<div  class="container">
-      <div class="flex-d row justify-content-center">
-        <div class="col-lg-4 col-md-6">
-        	<div class="card card-class" style="width: 18rem;">
+<body class="hawkerDashboard">
+<%@include file="hawkerLoginHeader.jsp" %>
+	<section id="section"> 
+      <div class="row">
+        <div class=" col-lg-2 d-flex">
+        </div>
+        <div class="col-lg-4 d-flex">
+        	<div class="card card-class text-center pb-3">
+        <a class="text-dark" href="/hawker/viewCurrentCustomers">
+        	   <img src="<c:url value="/resources/images/customer.png"/>" class="card-img-top">
   				<div class="card-body">
-  					<a class="text-dark" href="/hawker/viewCurrentCustomers">
   					<label>
     				<h5 class="text-center card-title">View Current Customers</h5>
-    				<p class="card-text">Click Here to view the details of current customers</p>
+    				<p class="card-text">Click Here to view the details of current customers.</p>
     				</label>
-    				</a>
   				</div>
+  				</a>
 			</div>
         </div>
-        <div class="col-lg-4 col-md-6">
-        	<div class="card card-class" style="width: 18rem;">
+        <div class=" col-lg-4 d-flex">
+        	<div class="card card-class text-center pb-3">
+        	 <a class="text-dark" href="/hawker/customerRequests">
+        	<img src="<c:url value="/resources/images/request.png"/>" class="card-img-top">
   				<div class="card-body">
-  					<a class="text-dark" href="/hawker/customerRequests">
   					<label>
     				<h5 class="text-center card-title">Customer Requests</h5>
     				<p class="card-text">Click Here to see the requests from customers.</p>
     				</label>
-    				</a>
   				</div>
+  				</a>
 			</div>
         </div>
-        <div class="col-lg-4 col-md-6">
-        	<div class="card card-class" style="width: 18rem;">
-  				<div class="card-body">
-  					<a class="text-dark" href="">
-  					<label>
-    				<h5 class="text-center card-title"></h5>
-    				<p class="card-text">Click Here to search the hawkers based on your preferences.</p>
-    				</label>
-    				</a>
-  				</div>
-			</div>
-        </div>
-        <div class="col-lg-6 mt-3">
-        	<div class="card card-class" style="width: 18rem;">
-  				<div class="card-body">
-  					<a class="text-dark" href="/hawker/update">
-  					<label>
-    				<h5 class="text-center card-title">Update Profile Details</h5>
-    				<p class="card-text">Click Here to update your details.</p>
-    				</label>
-    				</a>
-  				</div>
-			</div>
-        </div>
-        <div class="col-lg-6 mt-3">
-        	<div class="card card-class" style="width: 18rem;">
-  				<div class="card-body">
-  					<a class="text-dark" href="">
-  					<label>
-    				<h5 class="text-center card-title">Delete your account.</h5>
-    				<p class="card-text">Click Here to delete your account.</p>
-    				</label>
-    				</a>
-  				</div>
-			</div>
+        <div class=" col-lg-2 d-flex">
         </div>
        </div>
-     </div>
+       </section>
 
 </body>

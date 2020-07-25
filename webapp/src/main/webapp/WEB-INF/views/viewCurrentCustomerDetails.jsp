@@ -26,53 +26,54 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>"/>
 </head>
 
-<body class="bg-info">
+<body class="viewCurrentCustomerDetails">
+<%@include file="hawkerLoginHeader.jsp" %>
 	<div  class="container">
-      <div class="flex-d row justify-content-center">
-        <div class="col-md-12">
         <div class="content-section">
-        	<legend class="border-bottom mb-4">Customer Details</legend>
-        	<div class="form-group">
-        		<label class="form-control-label">Username:</label>
-        		<label class="form-control-label">${customer.username}</label>
-        	</div>
-        	<div class="form-group">
-        		<label class="form-control-label">Name:</label>
-        		<label class="form-control-label">${customer.name}</label>
-        	</div>
-        	<div class="form-group">
-        		<label class="form-control-label">E-Mail:</label>
-        		<label class="form-control-label">${customer.email}</label>
-        	</div>
-        	<div class="form-group">
-        		<label class="form-control-label">Contact:</label>
-        		<label class="form-control-label">${customer.contact}</label>
-        	</div>
-        	<div class="form-group">
-        		<label class="form-control-label">Address:</label>
-        		<label class="form-control-label">${customer.address}</label>
-        	</div>
-        	<div class="form-group">
-        		<label class="form-control-label">State:</label>
-        		<label class="form-control-label">${customer.state}</label>
-        	</div>
-        	<div class="form-group">
-        		<label class="form-control-label">City:</label>
-        		<label class="form-control-label">${customer.city}</label>
-        	</div>
-        	<div class="form-group">
-        		<label class="form-control-label">Leave Dates:</label><br>
-        		<c:choose>
+        	<h2 class=" text-center border-bottom mb-4">Customer Details</h2>
+        	<table>
+        	<tr>
+        		<td><label class="form-control-label">Username:</label></td>
+        		<td><label class="form-control-label">${customer.username}</label></td>
+        	</tr>
+        	<tr>
+        		<td><label class="form-control-label">Name:</label></td>
+        		<td><label class="form-control-label">${customer.name}</label></td>
+        	</tr>
+        	<tr>
+        		<td><label class="form-control-label">E-Mail:</label></td>
+        		<td><label class="form-control-label">${customer.email}</label></td>
+        	</tr>
+        	<tr>
+        		<td><label class="form-control-label">Contact:</label></td>
+        		<td><label class="form-control-label">${customer.contact}</label></td>
+        	</tr>
+        	<tr>
+        		<td><label class="form-control-label">Address:</label></td>
+        		<td><label class="form-control-label">${customer.address}</label></td>
+        	</tr>
+        	<tr>
+        		<td><label class="form-control-label">State:</label></td>
+        		<td><label class="form-control-label">${customer.state}</label></td>
+        	</tr>
+        	<tr>
+        		<td><label class="form-control-label">City:</label></td>
+        		<td><label class="form-control-label">${customer.city}</label></td>
+        	</tr>
+        	<tr>
+        		<td valign="top"><label class="form-control-label">Leave Dates:</label></td>
+        		<td><c:choose>
         			<c:when test="${customer.leaveDates.size()==0}">
-        				<label class="form-control-label">No Leave Dates added.</label>
+        				<td><label class="form-control-label">No Leave Dates added.</label></td>
         			</c:when>
         			<c:otherwise>
         				<c:forEach var="leaveDate" items="${customer.leaveDates}">
         					<label class="form-control-label">${leaveDate}</label><br>
         				</c:forEach>
         			</c:otherwise>
-        		</c:choose>
-        	</div>
+        		</c:choose></td>
+        	</tr>
+        	</table>
         	
         	
         	<c:choose>
@@ -208,8 +209,6 @@
         	
          </div>
        	</div>
-     </div>
-   </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

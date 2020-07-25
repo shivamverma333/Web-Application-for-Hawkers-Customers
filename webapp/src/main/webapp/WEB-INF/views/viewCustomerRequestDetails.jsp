@@ -26,23 +26,21 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>"/>
 </head>
 
-<body class="bg-info">
+<body class="viewCustomerRequestDetails">
 	<div  class="container">
-      <div class="flex-d row justify-content-center">
-        <div class="col-md-12">
+        <div class="content-section">
         <% if(request.getAttribute("error")!=null){ %>
         		<div class="alert alert-danger alert-dismissible" role="alert">
                   <button type="button" class="close" data-dismiss="alert">&times;</button>
                   ${error}
                 </div>
         <%} %>
-        <div class="content-section">
         <% if(request.getAttribute("error")!=null){ %>
         		<div class="alert alert-danger alert-dismissible" role="alert">
                   ${error}
                 </div>
         <%} %>
-        	<legend class="border-bottom mb-4">Customer Details</legend>
+        	<h2 class="border-bottom mb-4">Customer Details</h2>
         	<div class="form-group">
         		<label class="form-control-label">Username:</label>
         		<label class="form-control-label">${customer.username}</label>
@@ -71,11 +69,9 @@
         		<label class="form-control-label">City:</label>
         		<label class="form-control-label">${customer.city}</label>
         	</div>
-        	<a href="/hawker/customerRequests/${customer.username}/accept" class="btn btn-outline-info btn-md">Accept Request</a>
+        	<a href="/hawker/customerRequests/${customer.username}/accept" class="btn btn-dark btn-md">Accept Request</a>
          </div>
        	</div>
-     </div>
-   </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

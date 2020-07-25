@@ -22,7 +22,6 @@ import com.webapp.bean.PaymentDetails;
 import com.webapp.bean.Register;
 import com.webapp.bean.Request;
 import com.webapp.bean.Search;
-import com.webapp.dao.DAO;
 import com.webapp.service.CustomerService;
 import com.webapp.service.CustomerServiceImpl;
 import com.webapp.service.HawkerService;
@@ -35,8 +34,18 @@ public class CustomerController {
 	
 	ArrayList<HawkerDetails> list;
 	
+	
+	private boolean isLoggedIn(HttpSession session){
+		if(session.getAttribute("loggedin")==null||!(boolean)session.getAttribute("loggedin")||session.getAttribute("username")==null) {
+			return false;
+		}
+		return true;
+	}
+	
 	@RequestMapping(value="/login",method=RequestMethod.GET)
-	public String loginGet(Model model) {
+	public String loginGet(Model model,HttpSession session) {
+		if(isLoggedIn(session))
+			return "redirect:/customer/dashboard";
 		model.addAttribute("loginForm", new Login());
 		return "customerLogin";
 	}
@@ -47,11 +56,12 @@ public class CustomerController {
 		if(result.hasErrors()) {
 			return "customerLogin";
 		}
-		DAO dao=new DAO();
-		boolean verify=dao.checkLogin(user);
+		CustomerService cs=new CustomerServiceImpl();
+		boolean verify=cs.checkLogin(user);
 		if(verify) {
 			session.setAttribute("username", user.getUsername());
 			session.setAttribute("loggedin", true);
+			session.setAttribute("customer", cs.getCustomerDetails(user.getUsername()));
 			return "redirect:/customer/dashboard";
 		}
 		ra.addFlashAttribute("error","Invalid credentials. Please try again.");
@@ -60,7 +70,9 @@ public class CustomerController {
 	
 	
 	@RequestMapping(value="/register",method=RequestMethod.GET)
-	public String registerGet(Model model) {
+	public String registerGet(Model model,HttpSession session) {
+		if(isLoggedIn(session))
+			return "redirect:/customer/dashboard";
 		model.addAttribute("registerForm",new Register());
 		return "customerRegister";
 	}
@@ -76,6 +88,7 @@ public class CustomerController {
 		if(save) {
 			session.setAttribute("loggedin", true);
 			session.setAttribute("username",register.getUsername());
+			session.setAttribute("customer", cs.getCustomerDetails(register.getUsername()));
 			return "redirect:/customer/dashboard";
 		}
 		ra.addFlashAttribute("error", "Registration failed. Please try again.");
@@ -85,12 +98,16 @@ public class CustomerController {
 	
 	
 	@RequestMapping(value="/dashboard",method=RequestMethod.GET)
-	public String dashboard() {
+	public String dashboard(HttpSession session) {
+		if(!isLoggedIn(session))
+			return "redirect:/customer/login";
 		return "customerDashBoard";
 	}
 	
 	@RequestMapping(value="/search",method=RequestMethod.GET)
-	public String getSearchPage(Model model) {
+	public String getSearchPage(Model model,HttpSession session) {
+		if(!isLoggedIn(session))
+			return "redirect:/customer/login";
 		model.addAttribute("search", new Search());
 		return "hawkerSearch";
 	}
@@ -105,21 +122,21 @@ public class CustomerController {
 	
 	@RequestMapping(value="/update",method=RequestMethod.GET)
 	public String getUpdatePage(Model model,HttpSession session) {
-		String username=(String)session.getAttribute("username");
-		CustomerService cs=new CustomerServiceImpl();
-		CustomerDetails cd=cs.getCustomerDetails(username);
-		model.addAttribute("updateForm",cd);
+		if(!isLoggedIn(session))
+			return "redirect:/customer/login";
+		model.addAttribute("updateForm",session.getAttribute("customer"));
 		return "updateCustomer";
 	}
 	
 	@RequestMapping(value="/update",method=RequestMethod.POST)
-	public String update(@Valid @ModelAttribute("updateForm") CustomerDetails cd,BindingResult result,RedirectAttributes ra) {
+	public String update(@Valid @ModelAttribute("updateForm") CustomerDetails cd,BindingResult result,RedirectAttributes ra,HttpSession session) {
 		if(result.hasErrors()) {
 			return "updateCustomer";
 		}
 		CustomerService cs=new CustomerServiceImpl();
 		boolean success=cs.updateCustomer(cd);
 		if(success) {
+			session.setAttribute("customer",cs.getCustomerDetails(cd.getUsername()));
 			return "redirect:/customer/dashboard";
 		}
 		ra.addFlashAttribute("error","Update Failed.Please try again");
@@ -128,7 +145,9 @@ public class CustomerController {
 	}
 	
 	@RequestMapping(value="/search/{service}",method=RequestMethod.GET)
-	public String getSearchedHawkers(@PathVariable("service") String service,RedirectAttributes ra,Model model) {
+	public String getSearchedHawkers(@PathVariable("service") String service,RedirectAttributes ra,Model model,HttpSession session) {
+		if(!isLoggedIn(session))
+			return "redirect:/customer/login";
 		CustomerService cs=new CustomerServiceImpl();
 		list=cs.findHawkers(service);
 		if(list.isEmpty()) {
@@ -142,7 +161,9 @@ public class CustomerController {
 	}
 	
 	@RequestMapping(value="/search/{service}/{hawkerUsername}",method=RequestMethod.GET)
-	public String getHawkerDetailsPage(@PathVariable("service")String service,@PathVariable("hawkerUsername")String hawkerUsername,Model model) {
+	public String getHawkerDetailsPage(@PathVariable("service")String service,@PathVariable("hawkerUsername")String hawkerUsername,Model model,HttpSession session) {
+		if(!isLoggedIn(session))
+			return "redirect:/customer/login";
 		HawkerService hs=new HawkerServiceImpl();
 		HawkerDetails hawker=hs.getHawkerDetails(hawkerUsername);
 		model.addAttribute("hawker",hawker);
@@ -152,6 +173,8 @@ public class CustomerController {
 	
 	@RequestMapping(value="/search/{service}/{hawkerUsername}/request",method=RequestMethod.GET)
 	public String requestHawker(@PathVariable("service") String service,@PathVariable("hawkerUsername")String hawkerUsername,HttpSession session,RedirectAttributes ra) {
+		if(!isLoggedIn(session))
+			return "redirect:/customer/login";
 		String customerUsername=(String)session.getAttribute("username");
 		Request r=new Request();
 		r.setCustomerUsername(customerUsername);
@@ -173,6 +196,8 @@ public class CustomerController {
 	
 	@RequestMapping(value="/requested",method=RequestMethod.GET)
 	public String getRequestedHawkers(HttpSession session,Model model) {
+		if(!isLoggedIn(session))
+			return "redirect:/customer/login";
 		String customerUsername=(String)session.getAttribute("username");
 		CustomerService cs=new CustomerServiceImpl();
 		ArrayList<HawkerDetails> list=cs.getRequestedHawkers(customerUsername);
@@ -182,6 +207,8 @@ public class CustomerController {
 	
 	@RequestMapping(value="/currentHawkers",method=RequestMethod.GET)
 	public String getCurrentHawker(HttpSession session,Model model) {
+		if(!isLoggedIn(session))
+			return "redirect:/customer/login";
 		String customerUsername=(String)session.getAttribute("username");
 		CustomerService cs=new CustomerServiceImpl();
 		ArrayList<HawkerDetails> list=cs.getCurrentHawkers(customerUsername);
@@ -191,6 +218,8 @@ public class CustomerController {
 	
 	@RequestMapping(value="/currentHawkers/{hawkerUsername}",method=RequestMethod.GET)
 	public String getCurrentHawkerDetails(@PathVariable("hawkerUsername")String hawkerUsername,Model model,HttpSession session) {
+		if(!isLoggedIn(session))
+			return "redirect:/customer/login";
 		HawkerService hs=new HawkerServiceImpl();
 		Request request=new Request();
 		request.setHawkerUsername(hawkerUsername);

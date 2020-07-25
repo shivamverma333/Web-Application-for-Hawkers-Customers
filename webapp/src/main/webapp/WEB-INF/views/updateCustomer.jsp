@@ -25,10 +25,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>"/>
 </head>
-<body class="bg-info">
+<body class="updateCustomer">
+<%@include file="customerLoginHeader.jsp" %>
 	<div  class="container">
-      <div class="row">
-        <div class="col-md-12">
         	<div class="content-section">
         	<% if(request.getAttribute("error")!=null){ %>
         		<div class="alert alert-danger alert-dismissible" role="alert">
@@ -88,13 +87,11 @@
                         </div>
                 	</div>
                 	<div class="form-group">
-        				<input type="submit" class="btn btn-outline-info" value="submit" formnovalidate>
+        				<input type="submit" class="btn btn-dark" value="submit" formnovalidate>
             		</div>
         		</form:form>
     		</div>
         </div>
-      </div>
-    </div>
 </body>
 
 <script>
