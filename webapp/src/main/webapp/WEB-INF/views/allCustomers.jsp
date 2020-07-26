@@ -10,7 +10,7 @@
 	response.setHeader("Expires","0");
 
 	if(session.getAttribute("loggedin")==null||!(boolean)session.getAttribute("loggedin")||session.getAttribute("username")==null){
-		response.sendRedirect("/customer/login");
+		response.sendRedirect("/admin/login");
 	}
 
 %>
@@ -26,26 +26,24 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>"/>
 </head>
 
-<body class="viewCurrentHawkers">
-<%@include file="customerLoginHeader.jsp" %>
+<body class="viewAllCustomers">
+<%@include file="adminLoginHeader.jsp" %>
         <section id="section" class="pt-2">
-        <h2 class=" text-center mt-0 pt-0 mb-2 pb-2">Current Hawkers</h2>
-        <div class="row">
-        <div class="col-12 d-flex justify-content-center">
+           <h2 class=" text-center mt-0 pt-0 mb-2 pb-2">All Registered Customers</h2>
+           	<div class="row">
+        	<div class="col-12 d-flex justify-content-center">
         	<table class="table table-striped">
   				<thead class="thead-dark">
     				<tr>
       					<th scope="col">Username</th>
       					<th scope="col">Name</th>
-      					<th scope="col">Service</th>
     				</tr>
   				</thead>
-  				<tbody class="tbody">
-  				<c:forEach var="hawker" items="${list}">
-    				<tr onclick="window.location='/customer/currentHawkers/${hawker.username}'">
-    					    <th scope="row">${hawker.username}</th>
-      						<td>${hawker.name}</td>
-      						<td>${hawker.planName}</td>
+  				<tbody>
+  				<c:forEach var="customer" items="${customers}">
+    				<tr onclick="window.location.href='/admin/customers/${customer.username}'">
+    					    <th scope="row">${customer.username}</th>
+      						<td>${customer.name}</td>
     				</tr>
     			</c:forEach>
 				 </tbody>

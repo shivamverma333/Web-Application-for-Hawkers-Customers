@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>"/>
 </head>
 
-<body class="viewCurrentCustomers">
+<body class="viewCurrentCustomerDetails">
 <%@include file="hawkerLoginHeader.jsp" %>
         <section id="section" class="pt-2">
            <h2 class=" text-center mt-0 pt-0 mb-2 pb-2">Current Customers</h2>

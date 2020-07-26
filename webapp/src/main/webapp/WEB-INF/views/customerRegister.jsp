@@ -94,8 +94,8 @@
                 	
                 	
                 	<div class="form-group">
-        				<input style="width:10rem;" type="submit" class="btn btn-success" value="submit" formnovalidate>
-            			<input style="width:10rem;" type="reset" class="btn btn-danger" value="reset">
+        				<input type="submit" class="btn btn-success" value="submit" formnovalidate>
+            			<input type="reset" class="btn btn-danger" value="reset">
             		</div>
         		</form:form>
     		</div>

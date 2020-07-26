@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.webapp.bean.AdminDetails;
 import com.webapp.bean.CurrentCustomerDetails;
 import com.webapp.bean.CurrentHawkerDetails;
 import com.webapp.bean.CustomerDetails;
@@ -574,6 +575,76 @@ public class DAO {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	
+	public boolean checkAdminLogin(Login user) {
+		try {
+			statement=connection.prepareStatement("select * from admin where username=? and password=?");
+			statement.setString(1, user.getUsername());
+			statement.setString(2,user.getPassword());
+			resultSet=statement.executeQuery();
+			if(resultSet.next()) {
+				return true;
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return false;
+	}
+	
+	public AdminDetails getAdminDetails(String username) {
+		AdminDetails adminDetails=new AdminDetails();
+		try {
+			statement=connection.prepareStatement("select * from admindetails where username=?");
+			statement.setString(1, username);
+			resultSet=statement.executeQuery();
+			while(resultSet.next()) {
+				adminDetails.setUsername(resultSet.getString(1));
+				adminDetails.setName(resultSet.getString(2));
+				adminDetails.setEmail(resultSet.getString(3));
+				adminDetails.setContact(resultSet.getString(4));
+			}
+		}catch(SQLException e) {
+			System.out.println(e);
+			return null;
+		}
+		return adminDetails;
+	}
+	
+	public ArrayList<CustomerDetails> getAllCustomers() {
+		ArrayList <CustomerDetails> customers=new ArrayList<>();
+		try {
+			statement=connection.prepareStatement("select * from customerdetails");
+			resultSet=statement.executeQuery();
+			while(resultSet.next()) {
+				CustomerDetails cd=new CustomerDetails();
+				cd.setUsername(resultSet.getString(1));
+				customers.add(cd);
+			}
+		}catch(SQLException e) {
+			System.out.println(e);
+			return null;
+		}
+		return customers;
+	}
+	
+	public ArrayList<HawkerDetails> getAllHawkers() {
+		ArrayList <HawkerDetails> hawkers=new ArrayList<>();
+		try {
+			statement=connection.prepareStatement("select * from hawkerdetails");
+			resultSet=statement.executeQuery();
+			while(resultSet.next()) {
+				HawkerDetails cd=new HawkerDetails();
+				cd.setUsername(resultSet.getString(1));
+				hawkers.add(cd);
+			}
+		}catch(SQLException e) {
+			System.out.println(e);
+			return null;
+		}
+		return hawkers;
 	}
 
 }

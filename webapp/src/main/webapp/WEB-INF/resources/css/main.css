@@ -154,6 +154,14 @@
 	background-color:#ffffff;
 }
 
+.viewAllCustomers #section{
+	background-color:#ffffff;
+}
+
+.viewAllHawkers #section{
+	background-color:#ffffff;
+}
+
 .viewRequestedHawkers #section{
 	background-color:#ffffff;
 }
@@ -270,8 +278,23 @@
 	padding-left:0;
 	padding-right:0;
 }
+
+.viewAllCustomers #section{
+	padding-left:0;
+	padding-right:0;
+}
   
-  
+#section{
+	padding-left:0;
+	padding-right:0;
+}
+    .hucksterLogo{
+  	margin-top:0;
+  	padding-top:0;
+  	
+  	width:20rem;
+  	height:20rem;
+  }
 
   }
 

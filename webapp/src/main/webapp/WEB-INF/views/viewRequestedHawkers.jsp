@@ -43,8 +43,6 @@
       					<th scope="col">Username</th>
       					<th scope="col">Name</th>
       					<th scope="col">Service</th>
-      					<th scope="col">Quantity</th>
-      					<th scope="col">Monthly Price</th>
     				</tr>
   				</thead>
   				<tbody>
@@ -53,8 +51,6 @@
     					    <th scope="row">${hawker.username}</th>
       						<td>${hawker.name}</td>
       						<td>${hawker.planName}</td>
-      						<td>${hawker.planQuantity}</td>
-      						<td>${hawker.planPrice}</td>
     				</tr>
     			</c:forEach>
   					</c:otherwise>

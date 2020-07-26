@@ -10,7 +10,7 @@
 	response.setHeader("Expires","0");
 
 	if(session.getAttribute("loggedin")==null||!(boolean)session.getAttribute("loggedin")||session.getAttribute("username")==null){
-		response.sendRedirect("/customer/login");
+		response.sendRedirect("/admin/login");
 	}
 
 %>
@@ -26,33 +26,45 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>"/>
 </head>
 
-<body class="viewCurrentHawkers">
-<%@include file="customerLoginHeader.jsp" %>
-        <section id="section" class="pt-2">
-        <h2 class=" text-center mt-0 pt-0 mb-2 pb-2">Current Hawkers</h2>
-        <div class="row">
-        <div class="col-12 d-flex justify-content-center">
-        	<table class="table table-striped">
-  				<thead class="thead-dark">
-    				<tr>
-      					<th scope="col">Username</th>
-      					<th scope="col">Name</th>
-      					<th scope="col">Service</th>
-    				</tr>
-  				</thead>
-  				<tbody class="tbody">
-  				<c:forEach var="hawker" items="${list}">
-    				<tr onclick="window.location='/customer/currentHawkers/${hawker.username}'">
-    					    <th scope="row">${hawker.username}</th>
-      						<td>${hawker.name}</td>
-      						<td>${hawker.planName}</td>
-    				</tr>
-    			</c:forEach>
-				 </tbody>
-			</table>
-			</div>
-			</div>
-       	</section>
+<body class="viewCurrentHawkerDetails">
+<%@include file="adminLoginHeader.jsp" %>
+	<div  class="container">
+        <div class="content-section">
+        	<h2 class=" text-center border-bottom mb-4">Hawker Details</h2>
+        	<table>
+        	<tr>
+        		<td><label class="form-control-label">Username:</label></td>
+        		<td><label class="form-control-label">${hawker.username}</label></td>
+        	</tr>
+        	<tr>
+        		<td><label class="form-control-label">Name:</label></td>
+        		<td><label class="form-control-label">${hawker.name}</label></td>
+        	</tr>
+        	<tr>
+        		<td><label class="form-control-label">E-Mail:</label></td>
+        		<td><label class="form-control-label">${hawker.email}</label></td>
+        	</tr>
+        	<tr>
+        		<td><label class="form-control-label">Contact:</label></td>
+        		<td><label class="form-control-label">${hawker.contact}</label></td>
+        	</tr>
+        	<tr>
+        		<td><label class="form-control-label">Address:</label></td>
+        		<td><label class="form-control-label">${hawker.address}</label></td>
+        	</tr>
+        	<tr>
+        		<td><label class="form-control-label">State:</label></td>
+        		<td><label class="form-control-label">${hawker.state}</label></td>
+        	</tr>
+        	<tr>
+        		<td><label class="form-control-label">City:</label></td>
+        		<td><label class="form-control-label">${hawker.city}</label></td>
+        	</tr>
+        	</table>
+        	</div>
+        	</div>
+        	
+
 </body>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
