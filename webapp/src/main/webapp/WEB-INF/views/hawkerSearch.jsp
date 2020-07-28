@@ -28,14 +28,14 @@
 <%@include file="customerLoginHeader.jsp" %>
 	<div  class="container">
       <div class="content-section">
-        	<% if(request.getAttribute("error")!=null){ %>
+            <form:form method="POST" action="/customer/search" modelAttribute="search">
+                <div class="search"><h2 class="mb-3 pt-3 pb-3 text-white">Search Services</h2></div>
+                        	<% if(request.getAttribute("error")!=null){ %>
         		<div class="alert alert-danger alert-dismissible" role="alert">
                   <button type="button" class="close" data-dismiss="alert">&times;</button>
                   ${error}
                 </div>
             <%} %>
-            <form:form method="POST" action="/customer/search" modelAttribute="search">
-                <div class="search"><h2 class="mb-3 pt-3 pb-3 text-white">Search Services</h2></div>
                 <div class="form-group">
                 	<form:input path="search" type="text" placeholder="Search keywords ex. milk, newspaper, water etc.." class="form-control form-control"/>
                 	<div class="invalid-feedback">

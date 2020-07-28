@@ -186,6 +186,11 @@
 	width:100%;
 }
 
+.viewCurrentCustomerDetails #section{
+	background-color:#ffffff;
+}
+
+
 .hawkerSearch .content-section{
 	width:60%;
 	padding-top:0;

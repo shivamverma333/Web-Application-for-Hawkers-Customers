@@ -271,7 +271,7 @@ public class DAO {
 		ArrayList<Date> dates=new ArrayList<>();
 		ResultSet resultSet2;
 		try {
-			statement=connection.prepareStatement("select leaveDate from leaveDates where customerUsername=? and hawkerUsername=?");
+			statement=connection.prepareStatement("select leaveDate from leavedates where customerUsername=? and hawkerUsername=?");
 			statement.setString(1, request.getCustomerUsername());
 			statement.setString(2, request.getHawkerUsername());
 			resultSet2=statement.executeQuery();
@@ -388,7 +388,7 @@ public class DAO {
 	
 	public boolean requestAccept(Request r) {
 		try {
-			statement=connection.prepareStatement("insert into requestAccept values(?,?,?);");
+			statement=connection.prepareStatement("insert into requestaccept values(?,?,?);");
 			statement.setString(1, r.getCustomerUsername());
 			statement.setString(2, r.getHawkerUsername());
 			statement.setDate(3, new Date(System.currentTimeMillis()));
@@ -422,7 +422,7 @@ public class DAO {
 		ArrayList<CustomerDetails> list=new ArrayList<>();
 		ResultSet resultSet2;
 		try {
-			statement=connection.prepareStatement("select customerUsername from requestAccept where hawkerUsername=?;");
+			statement=connection.prepareStatement("select customerUsername from requestaccept where hawkerUsername=?;");
 			statement.setString(1, hawkerUsername);
 			resultSet2=statement.executeQuery();
 			while(resultSet2.next()) {
@@ -443,7 +443,7 @@ public class DAO {
 			return status;
 		}
 		try	{
-			statement=connection.prepareStatement("insert into leaveDates values(?,?,?);");
+			statement=connection.prepareStatement("insert into leavedates values(?,?,?);");
 			statement.setString(1,leaveDate.getCustomerUsername());
 			statement.setString(2, leaveDate.getHawkerUsername());
 			statement.setDate(3, Date.valueOf(leaveDate.getDate()));
@@ -463,7 +463,7 @@ public class DAO {
 	
 	public boolean checkValid(LeaveDate leaveDate) {
 		try {
-			statement=connection.prepareStatement("select count(leaveDate) from leaveDates where customerUsername=? and hawkerUsername=?");
+			statement=connection.prepareStatement("select count(leaveDate) from leavedates where customerUsername=? and hawkerUsername=?");
 			statement.setString(1, leaveDate.getCustomerUsername());
 			statement.setString(2, leaveDate.getHawkerUsername());
 			resultSet=statement.executeQuery();
@@ -482,7 +482,7 @@ public class DAO {
 	
 	public Request getRequestAcceptDate(Request request) {
 		try {
-			statement=connection.prepareStatement("select * from requestAccept where customerUsername=? and hawkerUsername=?");
+			statement=connection.prepareStatement("select * from requestaccept where customerUsername=? and hawkerUsername=?");
 			statement.setString(1, request.getCustomerUsername());
 			statement.setString(2, request.getHawkerUsername());
 			resultSet=statement.executeQuery();

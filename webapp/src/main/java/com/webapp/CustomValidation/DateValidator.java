@@ -39,7 +39,7 @@ public class DateValidator implements ConstraintValidator<DateValidate,String>{
 		}catch(DateTimeException e) {
 			return false;
 		}
-		if(day>leaveDay||month!=leaveMonth||year!=leaveYear) {
+		if(day>=leaveDay||year!=leaveYear) {
 			context.disableDefaultConstraintViolation();
 			context.buildConstraintViolationWithTemplate("Date should lie between current date and end date of service month")
 			.addConstraintViolation();

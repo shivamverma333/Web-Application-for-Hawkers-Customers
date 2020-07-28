@@ -151,7 +151,7 @@ public class CustomerController {
 		CustomerService cs=new CustomerServiceImpl();
 		list=cs.findHawkers(service);
 		if(list.isEmpty()) {
-			ra.addAttribute("error", "No Hawkers found for searched service.");
+			ra.addFlashAttribute("error", "No Hawkers found for searched service.");
 			return "redirect:/customer/search";
 		}
 		model.addAttribute("list",list);

@@ -41,13 +41,20 @@
     				</tr>
   				</thead>
   				<tbody>
-  				<c:forEach var="hawker" items="${list}">
+  				<c:choose>
+  					<c:when test="${list.size()==0}">
+  					<div class="text-center" style="color:red;">No hawkers found :-(</div>
+  					</c:when>
+  					<c:otherwise>
+  					<c:forEach var="hawker" items="${list}">
     				<tr onclick="window.location='/customer/search/${service}/${hawker.username}'">
     					    <th scope="row">${hawker.username}</th>
       						<td>${hawker.name}</td>
       						<td>${hawker.planName}</td>
     				</tr>
     			</c:forEach>
+  					</c:otherwise>
+  				</c:choose>
 				 </tbody>
 			</table>
        	</div>
